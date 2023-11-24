@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image with Buttons and Color Swatches</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .button-and-color-container {
+            max-width: 500px; /* This width matches the buttons and the image */
+            margin: auto; /* This will center the div */
+        }
+        .custom-img-size {
+            width: 500px; /* Ensures the element takes the full width of the container */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .input-file {
+            display: none;
+        }
+        .color-swatch {
+            padding: 20px;
+            margin: 5px 0; /* Space between rows of swatches */
+            color: #fff; /* Adjust text color for visibility */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .color-container {
+            width: 500px
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container d-flex flex-column justify-content-center align-items-center h-100">
+        <!-- Image -->
+        <img src="{{ image_path if image_path else url_for('static', filename='default-image.jpeg') }}" class="img-fluid custom-img-size mb-3" alt="Responsive image">
+
+        <!-- Buttons -->
+        <div class="button-and-color-container text-center">
+            <form method="post" enctype="multipart/form-data" action="/">
+                <input type="file" class="input-file" name="file" id="file-input">
+                <label for="file-input" class="btn btn-primary btn-block custom-img-size">Upload Image</label>
+                <button class="btn btn-success btn-block mb-3 custom-img-size">Run</button>
+            </form>
+        </div>
+
+        <div>
+            <!-- Color Display Section, directly beneath buttons -->
+            {% for color in session.color_palette %}
+            <div class="color-swatch color-container" style="background-color: {{ color }};">
+                <p>{{ color }}</p>
+            </div>
+            {% endfor %}
+            <!-- Additional color swatches here -->
+        </div>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
